@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Hashtable;
 
+import Functions.HTSeqCountParser;
 import Functions.TableParser;
 
 
@@ -22,6 +23,7 @@ public class Main {
 
 	public enum Programs {
 		EXTRACTCOLUMN,
+		HTSEQCOUNT,
 		HELP
 	}	
 
@@ -63,7 +65,7 @@ public class Main {
 			
 			if (allPresent){
 				if (IOTools.isDir(inDir)){
-					ArrayList<String> fileNames = IOTools.getSequenceFiles(inDir, suffix);
+					ArrayList<String> fileNames = IOTools.getSequenceFilesRecursive(inDir, suffix);
 					runProgram(T,inDir, outFile,fileNames);
 				}
 				else if (IOTools.fileExists(inDir)) {
@@ -92,6 +94,10 @@ public class Main {
 				case EXTRACTCOLUMN:
 					if(TableParser.extractColumnsParameters(T))
 						TableParser.extractColumns(T, inDir,fileNames,outFile);
+					break;
+				case HTSEQCOUNT:
+					if(HTSeqCountParser.extractColumnsParameters(T))
+						HTSeqCountParser.extractColumns(T, inDir,fileNames,outFile);
 					break;
 				default: help(T);	
 
