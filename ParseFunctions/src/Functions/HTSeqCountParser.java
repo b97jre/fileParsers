@@ -20,7 +20,10 @@ public class HTSeqCountParser {
 	public static void extractColumns(Hashtable<String, String> T,String inDir, ArrayList<String> fileNames,String outFile){
 		
 		String commonPrefix = IOTools.longestCommonPrefix(fileNames);
+		System.out.println("Common prefix "+commonPrefix);
+		
 		String commonSuffix = IOTools.longestCommonSuffix(fileNames);
+		System.out.println("Common suffix "+commonSuffix);
 		
 		ArrayList<String> sampleNames = new ArrayList<String>();
 		for(int j = 0; j < fileNames.size(); j++){
@@ -28,6 +31,7 @@ public class HTSeqCountParser {
 			sampleName = Functions.getFileWithoutPrefix(sampleName, commonPrefix);
 			sampleName = IOTools.fixFileName(sampleName);
 			sampleNames.add(sampleName);
+			System.out.println(sampleNames);
 		}
 		
 		try{
@@ -37,8 +41,7 @@ public class HTSeqCountParser {
 				ExtendedWriter EW = ExtendedWriter.getFileWriter(inDir+"/"+outFile);
 				ExtendedReader[] ERs = new ExtendedReader[fileNames.size()];
 				for(int i = 0; i < fileNames.size();i++){
-					System.out.println(fileNames.get(i));
-					ERs[i] = ExtendedReader.getFileReader(inDir+"/"+fileNames.get(i));
+					ERs[i] = ExtendedReader.getFileReader(fileNames.get(i));
 				}
 				
 				// print the filenames
@@ -48,6 +51,7 @@ public class HTSeqCountParser {
 				EW.println(sampleNames.get(sampleNames.size()-1));
 
 				while(ERs[0].more()){
+					
 					EW.print(ERs[0].readLine()+seperator);
 					for(int i = 1; i < fileNames.size()-1;i++){
 						String[] cols = ERs[i].readLine().split(seperator);

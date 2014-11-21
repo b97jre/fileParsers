@@ -7,7 +7,6 @@ import java.util.Hashtable;
 import Functions.HTSeqCountParser;
 import Functions.TableParser;
 
-
 import general.Functions;
 import general.IOTools;
 
@@ -45,7 +44,7 @@ public class Main {
 			boolean allPresent = true;
 			if (T.containsKey("-i")){
 				inDir = Functions.getValue(T, "-i");
-				//System.out.println(inDir);
+				System.out.println("indir  :"+inDir);
 				inDir = new File(inDir).getAbsolutePath();
 				//System.out.println(inDir);
 			}else
